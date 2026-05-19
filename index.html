@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>terminal-zero | live dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0d1117; --surface: #161b22; --border: #30363d;
+    --accent: #58a6ff; --green: #3fb950; --yellow: #d29922;
+    --red: #f85149; --text: #e6edf3; --muted: #8b949e;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+  }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; padding: 1rem; }
+  header { text-align: center; padding: 2rem 0 1.5rem; border-bottom: 1px solid var(--border); margin-bottom: 1.5rem; }
+  header h1 { font-size: 1.8rem; color: var(--accent); letter-spacing: 0.05em; }
+  header p { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; max-width: 1100px; margin: 0 auto; }
+  .card { background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 1.2rem; }
+  .card-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem; }
+  .card-title::before { content: '▸'; color: var(--accent); }
+  .big-val { font-size: 2rem; font-weight: 700; color: var(--green); }
+  .sub-val { font-size: 0.8rem; color: var(--muted); margin-top: 0.3rem; }
+  .weather-val { font-size: 1.6rem; font-weight: 700; color: var(--yellow); }
+  .hn-list { list-style: none; }
+  .hn-list li { padding: 0.5rem 0; border-bottom: 1px solid var(--border); font-size: 0.82rem; line-height: 1.4; }
+  .hn-list li:last-child { border-bottom: none; }
+  .hn-list a { color: var(--accent); text-decoration: none; }
+  .hn-list a:hover { text-decoration: underline; }
+  .hn-score { color: var(--muted); font-size: 0.72rem; margin-top: 0.2rem; }
+  .repl-input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 4px; color: var(--text); font-family: var(--font-mono); font-size: 0.85rem; padding: 0.5rem 0.75rem; margin-top: 0.5rem; outline: none; }
+  .repl-input:focus { border-color: var(--accent); }
+  .repl-output { background: var(--bg); border: 1px solid var(--border); border-radius: 4px; padding: 0.5rem 0.75rem; margin-top: 0.5rem; min-height: 3rem; font-size: 0.82rem; white-space: pre-wrap; color: var(--green); }
+  .repl-history { font-size: 0.75rem; color: var(--muted); margin-top: 0.75rem; max-height: 120px; overflow-y: auto; }
+  .repl-history span { display: block; padding: 0.15rem 0; border-bottom: 1px solid var(--border); }
+  .status-dot { display: inline-block; width: 7px; height: 7px; border-radius: 50%; margin-right: 0.4rem; background: var(--muted); }
+  .status-dot.live { background: var(--green); box-shadow: 0 0 6px var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .loading { color: var(--muted); font-size: 0.82rem; animation: blink 1.2s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .err { color: var(--red); font-size: 0.82rem; }
+  footer { text-align: center; color: var(--muted); font-size: 0.72rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+  @media(max-width:500px){ .big-val{font-size:1.4rem} header h1{font-size:1.3rem} }
+</style>
+</head>
+<body>
+<header>
+  <h1>◈ terminal-zero</h1>
+  <p><span class="status-dot live"></span>live dashboard · zero dependencies · built from scratch</p>
+</header>
+
+<div class="grid">
+  <!-- BTC -->
+  <div class="card" id="btc-card">
+    <div class="card-title">bitcoin price (USD)</div>
+    <div class="big-val" id="btc-price"><span class="loading">fetching...</span></div>
+    <div class="sub-val" id="btc-time"></div>
+  </div>
+
+  <!-- Weather -->
+  <div class="card" id="weather-card">
+    <div class="card-title">karachi weather</div>
+    <div class="weather-val" id="weather-temp"><span class="loading">fetching...</span></div>
+    <div class="sub-val" id="weather-desc"></div>
+    <div class="sub-val" id="weather-time"></div>
+  </div>
+
+  <!-- HN -->
+  <div class="card" style="grid-column: span 1;">
+    <div class="card-title">hacker news — top 3</div>
+    <ul class="hn-list" id="hn-list"><li><span class="loading">fetching...</span></li></ul>
+  </div>
+
+  <!-- LISP REPL -->
+  <div class="card" style="grid-column: span 1;">
+    <div class="card-title">lisp mini-repl</div>
+    <div style="font-size:0.75rem;color:var(--muted);margin-bottom:0.4rem;">try: (+ 1 2) · (* 3 4) · (define x 10) · (if (> x 5) "big" "small") · (list 1 2 3) · (car (list 1 2 3))</div>
+    <input class="repl-input" id="repl-in" placeholder="(+ 1 2)" spellcheck="false" autocomplete="off">
+    <div class="repl-output" id="repl-out">⟩ ready</div>
+    <div class="repl-history" id="repl-hist"></div>
+  </div>
+</div>
+
+<footer>terminal-zero · github.com/richardbrownmiami-commits/terminal-zero · built with zero npm</footer>
+
+<script>
+// ── Weather codes ──────────────────────────────────────────
+const WMO = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Slight rain',63:'Rain',65:'Heavy rain',71:'Slight snow',73:'Snow',75:'Heavy snow',80:'Rain showers',81:'Rain showers',82:'Violent showers',95:'Thunderstorm',96:'Thunderstorm+hail',99:'Thunderstorm+hail'};
+
+// ── BTC ────────────────────────────────────────────────────
+async function loadBTC() {
+  try {
+    const r = await fetch('https://api.coinbase.com/v2/prices/BTC-USD/spot');
+    const d = await r.json();
+    const amt = parseFloat(d.data.amount);
+    document.getElementById('btc-price').textContent = '$' + amt.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+    document.getElementById('btc-time').textContent = 'updated ' + new Date().toLocaleTimeString();
+  } catch(e) {
+    document.getElementById('btc-price').innerHTML = '<span class="err">fetch failed: ' + e.message + '</span>';
+  }
+}
+
+// ── Weather ────────────────────────────────────────────────
+async function loadWeather() {
+  try {
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=24.86&longitude=67.01&current=temperature_2m,weathercode&timezone=Asia/Karachi');
+    const d = await r.json();
+    const temp = d.current.temperature_2m;
+    const code = d.current.weathercode;
+    document.getElementById('weather-temp').textContent = temp + '°C';
+    document.getElementById('weather-desc').textContent = WMO[code] || ('Code ' + code);
+    document.getElementById('weather-time').textContent = 'as of ' + d.current.time.replace('T',' ');
+  } catch(e) {
+    document.getElementById('weather-temp').innerHTML = '<span class="err">fetch failed</span>';
+  }
+}
+
+// ── Hacker News ────────────────────────────────────────────
+async function loadHN() {
+  try {
+    const ids = await (await fetch('https://hacker-news.firebaseio.com/v0/topstories.json')).json();
+    const top3 = ids.slice(0,3);
+    const stories = await Promise.all(top3.map(id =>
+      fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json').then(r=>r.json())
+    ));
+    const ul = document.getElementById('hn-list');
+    ul.innerHTML = stories.map(s =>
+      `<li><a href="${s.url||'https://news.ycombinator.com/item?id='+s.id}" target="_blank" rel="noopener">${s.title}</a><div class="hn-score">▲ ${s.score} pts · ${s.descendants||0} comments</div></li>`
+    ).join('');
+  } catch(e) {
+    document.getElementById('hn-list').innerHTML = '<li class="err">fetch failed: ' + e.message + '</li>';
+  }
+}
+
+// ── LISP REPL ──────────────────────────────────────────────
+const env = {
+  '+': (...a) => a.reduce((s,x)=>s+x,0),
+  '-': (a,...r) => r.length ? r.reduce((s,x)=>s-x,a) : -a,
+  '*': (...a) => a.reduce((p,x)=>p*x,1),
+  '/': (a,b) => a/b,
+  '>': (a,b) => a>b, '<': (a,b) => a<b, '=': (a,b) => a===b,
+  '>=': (a,b) => a>=b, '<=': (a,b) => a<=b,
+  'not': a => !a, 'and': (...a) => a.every(Boolean), 'or': (...a) => a.some(Boolean),
+  'list': (...a) => a,
+  'car': a => a[0], 'cdr': a => a.slice(1),
+  'cons': (a,b) => [a,...(Array.isArray(b)?b:[b])],
+  'null?': a => Array.isArray(a)&&a.length===0,
+  'length': a => a.length,
+  'append': (a,b) => [...a,...b],
+  'map': (fn,lst) => lst.map(x=>fn(x)),
+  'filter': (fn,lst) => lst.filter(x=>fn(x)),
+  'abs': Math.abs, 'max': Math.max, 'min': Math.min,
+  'sqrt': Math.sqrt, 'floor': Math.floor, 'ceil': Math.ceil,
+  'number?': a => typeof a==='number',
+  'string?': a => typeof a==='string',
+  'symbol?': a => typeof a==='symbol',
+};
+
+function tokenize(src) {
+  return src.replace(/\(/g,' ( ').replace(/\)/g,' ) ').trim().split(/\s+/).filter(Boolean);
+}
+function parse(tokens) {
+  if (!tokens.length) throw new Error('Unexpected EOF');
+  const tok = tokens.shift();
+  if (tok === '(') {
+    const list = [];
+    while (tokens[0] !== ')') {
+      if (!tokens.length) throw new Error('Missing )');
+      list.push(parse(tokens));
+    }
+    tokens.shift();
+    return list;
+  }
+  if (tok === ')') throw new Error('Unexpected )');
+  const n = Number(tok);
+  if (!isNaN(n)) return n;
+  if (tok.startsWith('"') && tok.endsWith('"')) return tok.slice(1,-1);
+  return tok;
+}
+function evalLisp(ast, scope) {
+  if (typeof ast === 'number') return ast;
+  if (typeof ast === 'boolean') return ast;
+  if (typeof ast === 'string') {
+    if (ast in scope) return scope[ast];
+    // string literal check already done in parse
+    return ast;
+  }
+  if (!Array.isArray(ast)) return ast;
+  if (!ast.length) return [];
+  const [head, ...args] = ast;
+  if (head === 'quote') return args[0];
+  if (head === 'if') {
+    const [test, cons, alt] = args;
+    return evalLisp(evalLisp(test,scope) ? cons : alt, scope);
+  }
+  if (head === 'define') {
+    const [name, val] = args;
+    scope[name] = evalLisp(val, scope);
+    return '→ defined ' + name;
+  }
+  if (head === 'lambda') {
+    const [params, body] = args;
+    return (...vals) => {
+      const inner = Object.assign({}, scope);
+      params.forEach((p,i) => inner[p] = vals[i]);
+      return evalLisp(body, inner);
+    };
+  }
+  if (head === 'let') {
+    const [bindings, body] = args;
+    const inner = Object.assign({}, scope);
+    bindings.forEach(([k,v]) => inner[k] = evalLisp(v,scope));
+    return evalLisp(body, inner);
+  }
+  if (head === 'begin') return args.reduce((_, x) => evalLisp(x,scope), null);
+  const fn = evalLisp(head, scope);
+  if (typeof fn !== 'function') throw new Error(head + ' is not a function');
+  const evArgs = args.map(a => evalLisp(a,scope));
+  return fn(...evArgs);
+}
+function lispRun(src) {
+  const tokens = tokenize(src);
+  const ast = parse(tokens);
+  const result = evalLisp(ast, Object.assign({}, env));
+  if (Array.isArray(result)) return '(' + result.map(x=>JSON.stringify(x)).join(' ') + ')';
+  if (typeof result === 'function') return '#<procedure>';
+  return String(result);
+}
+
+const replIn = document.getElementById('repl-in');
+const replOut = document.getElementById('repl-out');
+const replHist = document.getElementById('repl-hist');
+const userEnv = Object.assign({}, env);
+replIn.addEventListener('keydown', e => {
+  if (e.key !== 'Enter') return;
+  const src = replIn.value.trim();
+  if (!src) return;
+  replIn.value = '';
+  let out;
+  try {
+    const tokens = tokenize(src);
+    const ast = parse(tokens);
+    const res = evalLisp(ast, userEnv);
+    if (Array.isArray(res)) out = '(' + res.map(x=>JSON.stringify(x)).join(' ') + ')';
+    else if (typeof res === 'function') out = '#<procedure>';
+    else out = String(res);
+  } catch(err) { out = '⚠ ' + err.message; }
+  replOut.textContent = '⟩ ' + out;
+  const entry = document.createElement('span');
+  entry.textContent = src + '  →  ' + out;
+  replHist.prepend(entry);
+});
+
+// ── Auto-refresh every 60s ─────────────────────────────────
+loadBTC(); loadWeather(); loadHN();
+setInterval(loadBTC, 60000);
+setInterval(loadWeather, 60000);
+setInterval(loadHN, 120000);
+</script>
+</body>
+</html>
