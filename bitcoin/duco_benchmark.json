@@ -1,0 +1,409 @@
+{
+  "tool": "DUCO Mining Simulator",
+  "version": "1.0",
+  "timestamp": "2026-05-19T16:19:59Z",
+  "algorithm": "SHA1 brute-force (Duino-Coin DUCO-S1 protocol)",
+  "python_version": "3.12",
+  "results": {
+    "difficulty_50": {
+      "difficulty": 50,
+      "shares_mined": 10,
+      "shares_found": 10,
+      "avg_time_ms": 0.76,
+      "shares_per_minute": 78936.98,
+      "avg_hashrate_khs": 2897.41,
+      "shares": [
+        {
+          "nonce": 4539,
+          "expected_nonce": 4539,
+          "expected_hash": "27088d6469872c99f81505b2378536db0c165e7b",
+          "attempts": 4540,
+          "elapsed_ms": 1.623,
+          "hashrate_khs": 2797.28,
+          "found": true
+        },
+        {
+          "nonce": 1046,
+          "expected_nonce": 1046,
+          "expected_hash": "495979f2d910bbbbe9edc3061926ad505e9f6ec3",
+          "attempts": 1047,
+          "elapsed_ms": 0.36,
+          "hashrate_khs": 2911.32,
+          "found": true
+        },
+        {
+          "nonce": 2429,
+          "expected_nonce": 2429,
+          "expected_hash": "c9dbe3fec81db3217e3f75dae335a637461e9e5f",
+          "attempts": 2430,
+          "elapsed_ms": 0.842,
+          "hashrate_khs": 2886.42,
+          "found": true
+        },
+        {
+          "nonce": 3701,
+          "expected_nonce": 3701,
+          "expected_hash": "90b04ad6b3640f8c50d1da1e817c378a4c97c895",
+          "attempts": 3702,
+          "elapsed_ms": 1.283,
+          "hashrate_khs": 2885.35,
+          "found": true
+        },
+        {
+          "nonce": 2437,
+          "expected_nonce": 2437,
+          "expected_hash": "90294358fc12dee8ed2439966f0dd7dd7e598ee4",
+          "attempts": 2438,
+          "elapsed_ms": 0.844,
+          "hashrate_khs": 2887.93,
+          "found": true
+        },
+        {
+          "nonce": 4409,
+          "expected_nonce": 4409,
+          "expected_hash": "2a90abc4bed61a673b3a7f5f238d39b4fd04b22c",
+          "attempts": 4410,
+          "elapsed_ms": 1.53,
+          "hashrate_khs": 2882.23,
+          "found": true
+        },
+        {
+          "nonce": 463,
+          "expected_nonce": 463,
+          "expected_hash": "69dd6dbc481a6e9c22163738ef25d8433393b70a",
+          "attempts": 464,
+          "elapsed_ms": 0.158,
+          "hashrate_khs": 2937.27,
+          "found": true
+        },
+        {
+          "nonce": 394,
+          "expected_nonce": 394,
+          "expected_hash": "20e474e2aaaf4c65a56430873ca92d5a514f2546",
+          "attempts": 395,
+          "elapsed_ms": 0.133,
+          "hashrate_khs": 2962.57,
+          "found": true
+        },
+        {
+          "nonce": 501,
+          "expected_nonce": 501,
+          "expected_hash": "474394b41360f44451c68b063579c5960b45c240",
+          "attempts": 502,
+          "elapsed_ms": 0.171,
+          "hashrate_khs": 2928.46,
+          "found": true
+        },
+        {
+          "nonce": 1900,
+          "expected_nonce": 1900,
+          "expected_hash": "c8ec2087b6e4001ae0d50bfaba6ff5c636420b52",
+          "attempts": 1901,
+          "elapsed_ms": 0.657,
+          "hashrate_khs": 2895.26,
+          "found": true
+        }
+      ]
+    },
+    "difficulty_100": {
+      "difficulty": 100,
+      "shares_mined": 10,
+      "shares_found": 10,
+      "avg_time_ms": 2.153,
+      "shares_per_minute": 27870.68,
+      "avg_hashrate_khs": 2880.37,
+      "shares": [
+        {
+          "nonce": 7417,
+          "expected_nonce": 7417,
+          "expected_hash": "180e94ec2cc1a5fe51f3339261c43ed3d579e831",
+          "attempts": 7418,
+          "elapsed_ms": 2.584,
+          "hashrate_khs": 2870.86,
+          "found": true
+        },
+        {
+          "nonce": 5642,
+          "expected_nonce": 5642,
+          "expected_hash": "94ff5747b07019add755b2e18dc3fa5d01b634e5",
+          "attempts": 5643,
+          "elapsed_ms": 1.963,
+          "hashrate_khs": 2874.1,
+          "found": true
+        },
+        {
+          "nonce": 6227,
+          "expected_nonce": 6227,
+          "expected_hash": "c6019f1a24b55a4cc457c5e1fa9d9b595a83050d",
+          "attempts": 6228,
+          "elapsed_ms": 2.168,
+          "hashrate_khs": 2872.6,
+          "found": true
+        },
+        {
+          "nonce": 165,
+          "expected_nonce": 165,
+          "expected_hash": "697933dd84f18817a36054d1abb36714215c4dda",
+          "attempts": 166,
+          "elapsed_ms": 0.056,
+          "hashrate_khs": 2980.25,
+          "found": true
+        },
+        {
+          "nonce": 8280,
+          "expected_nonce": 8280,
+          "expected_hash": "7c45294dbd43b69620cbdc6681e890485d5de454",
+          "attempts": 8281,
+          "elapsed_ms": 2.892,
+          "hashrate_khs": 2863.56,
+          "found": true
+        },
+        {
+          "nonce": 6696,
+          "expected_nonce": 6696,
+          "expected_hash": "d411731ce27130c245050b594d7ca66ff5b06d23",
+          "attempts": 6697,
+          "elapsed_ms": 2.336,
+          "hashrate_khs": 2867.35,
+          "found": true
+        },
+        {
+          "nonce": 2818,
+          "expected_nonce": 2818,
+          "expected_hash": "0dea6734680baf6365c8798fe3d0e11e1312c55b",
+          "attempts": 2819,
+          "elapsed_ms": 0.979,
+          "hashrate_khs": 2879.22,
+          "found": true
+        },
+        {
+          "nonce": 6876,
+          "expected_nonce": 6876,
+          "expected_hash": "6b54e3d464d06ca040a00abcbd8513faa644e55e",
+          "attempts": 6877,
+          "elapsed_ms": 2.402,
+          "hashrate_khs": 2863.45,
+          "found": true
+        },
+        {
+          "nonce": 9679,
+          "expected_nonce": 9679,
+          "expected_hash": "51f4d74444e30d370ec9d5ed0d0ad79340a0c7be",
+          "attempts": 9680,
+          "elapsed_ms": 3.368,
+          "hashrate_khs": 2873.74,
+          "found": true
+        },
+        {
+          "nonce": 7946,
+          "expected_nonce": 7946,
+          "expected_hash": "b1fb436b8c7294ddd4cae09a1e61b4a54fded572",
+          "attempts": 7947,
+          "elapsed_ms": 2.78,
+          "hashrate_khs": 2858.58,
+          "found": true
+        }
+      ]
+    },
+    "difficulty_500": {
+      "difficulty": 500,
+      "shares_mined": 10,
+      "shares_found": 10,
+      "avg_time_ms": 7.637,
+      "shares_per_minute": 7856.9,
+      "avg_hashrate_khs": 2859.85,
+      "shares": [
+        {
+          "nonce": 15261,
+          "expected_nonce": 15261,
+          "expected_hash": "d1d381bbbda45354da05067ee64deb3337907fa5",
+          "attempts": 15262,
+          "elapsed_ms": 5.316,
+          "hashrate_khs": 2871.19,
+          "found": true
+        },
+        {
+          "nonce": 1646,
+          "expected_nonce": 1646,
+          "expected_hash": "398f213a47a160fa30b287f82786b88122556306",
+          "attempts": 1647,
+          "elapsed_ms": 0.572,
+          "hashrate_khs": 2880.73,
+          "found": true
+        },
+        {
+          "nonce": 35912,
+          "expected_nonce": 35912,
+          "expected_hash": "eec482ef9d54f8b838f1c80ea00f730d841e7b6f",
+          "attempts": 35913,
+          "elapsed_ms": 12.514,
+          "hashrate_khs": 2869.77,
+          "found": true
+        },
+        {
+          "nonce": 13885,
+          "expected_nonce": 13885,
+          "expected_hash": "e459648a2aaa3b6c92cad1502f4d2002757915bd",
+          "attempts": 13886,
+          "elapsed_ms": 4.872,
+          "hashrate_khs": 2850.02,
+          "found": true
+        },
+        {
+          "nonce": 12324,
+          "expected_nonce": 12324,
+          "expected_hash": "71ac9cf2049dc0c60a5c2d2fd1117db16c5f0a2e",
+          "attempts": 12325,
+          "elapsed_ms": 4.297,
+          "hashrate_khs": 2868.17,
+          "found": true
+        },
+        {
+          "nonce": 24266,
+          "expected_nonce": 24266,
+          "expected_hash": "f2b3e9ab044db5bd131a7d4436869d2b2c1cbc4d",
+          "attempts": 24267,
+          "elapsed_ms": 8.733,
+          "hashrate_khs": 2778.73,
+          "found": true
+        },
+        {
+          "nonce": 37477,
+          "expected_nonce": 37477,
+          "expected_hash": "97734f6b5753a5ddeab6f337a1650d32e467ef66",
+          "attempts": 37478,
+          "elapsed_ms": 13.094,
+          "hashrate_khs": 2862.28,
+          "found": true
+        },
+        {
+          "nonce": 12466,
+          "expected_nonce": 12466,
+          "expected_hash": "5f35e5ba7dc69895db72b7b287a48bcd1c3253b1",
+          "attempts": 12467,
+          "elapsed_ms": 4.323,
+          "hashrate_khs": 2883.92,
+          "found": true
+        },
+        {
+          "nonce": 26166,
+          "expected_nonce": 26166,
+          "expected_hash": "96fe1174865f670512b48f5d28c8392ddda3a9f8",
+          "attempts": 26167,
+          "elapsed_ms": 9.125,
+          "hashrate_khs": 2867.49,
+          "found": true
+        },
+        {
+          "nonce": 38749,
+          "expected_nonce": 38749,
+          "expected_hash": "ab51b0b4e6865ed467a40d0aeb542b69278f2929",
+          "attempts": 38750,
+          "elapsed_ms": 13.52,
+          "hashrate_khs": 2866.17,
+          "found": true
+        }
+      ]
+    },
+    "difficulty_1000": {
+      "difficulty": 1000,
+      "shares_mined": 10,
+      "shares_found": 10,
+      "avg_time_ms": 21.96,
+      "shares_per_minute": 2732.2,
+      "avg_hashrate_khs": 2854.49,
+      "shares": [
+        {
+          "nonce": 92502,
+          "expected_nonce": 92502,
+          "expected_hash": "9fcf9f0899df4f03dd27b893dcd3ad175beb56e6",
+          "attempts": 92503,
+          "elapsed_ms": 32.172,
+          "hashrate_khs": 2875.24,
+          "found": true
+        },
+        {
+          "nonce": 85071,
+          "expected_nonce": 85071,
+          "expected_hash": "f3571e39d36c17a25bfb8c209dd1ef46606ac330",
+          "attempts": 85072,
+          "elapsed_ms": 30.177,
+          "hashrate_khs": 2819.14,
+          "found": true
+        },
+        {
+          "nonce": 81467,
+          "expected_nonce": 81467,
+          "expected_hash": "7722ced88f6f928b3b4fcbb66fd8a56357fc81f9",
+          "attempts": 81468,
+          "elapsed_ms": 28.376,
+          "hashrate_khs": 2870.98,
+          "found": true
+        },
+        {
+          "nonce": 29941,
+          "expected_nonce": 29941,
+          "expected_hash": "6e830ee45b6ba3a173d2ad670a2d32a371d2c84b",
+          "attempts": 29942,
+          "elapsed_ms": 10.427,
+          "hashrate_khs": 2871.65,
+          "found": true
+        },
+        {
+          "nonce": 90401,
+          "expected_nonce": 90401,
+          "expected_hash": "65ce2ccdace5cab0bc513191e8b236a324ea3b64",
+          "attempts": 90402,
+          "elapsed_ms": 31.535,
+          "hashrate_khs": 2866.76,
+          "found": true
+        },
+        {
+          "nonce": 19395,
+          "expected_nonce": 19395,
+          "expected_hash": "580315f6c0fba7136ab9ad1e1597ca3ff776fde8",
+          "attempts": 19396,
+          "elapsed_ms": 6.713,
+          "hashrate_khs": 2889.37,
+          "found": true
+        },
+        {
+          "nonce": 42582,
+          "expected_nonce": 42582,
+          "expected_hash": "bbfc3177fa00b3e52ec384e651b3fa39004ccc96",
+          "attempts": 42583,
+          "elapsed_ms": 14.856,
+          "hashrate_khs": 2866.37,
+          "found": true
+        },
+        {
+          "nonce": 79795,
+          "expected_nonce": 79795,
+          "expected_hash": "9fad5b9e210dd05c75c5af633fcdad577da0386d",
+          "attempts": 79796,
+          "elapsed_ms": 28.144,
+          "hashrate_khs": 2835.32,
+          "found": true
+        },
+        {
+          "nonce": 74972,
+          "expected_nonce": 74972,
+          "expected_hash": "def66701207f7cb684f2fcba555776bfc574d542",
+          "attempts": 74973,
+          "elapsed_ms": 26.154,
+          "hashrate_khs": 2866.65,
+          "found": true
+        },
+        {
+          "nonce": 30754,
+          "expected_nonce": 30754,
+          "expected_hash": "90875c75a52af358ec4d47249d6e80787e5fcfbb",
+          "attempts": 30755,
+          "elapsed_ms": 11.049,
+          "hashrate_khs": 2783.39,
+          "found": true
+        }
+      ]
+    }
+  }
+}
